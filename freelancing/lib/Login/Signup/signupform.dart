@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:freelancing/navigationbar/navigation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Signupform extends StatefulWidget {
   const Signupform({super.key});
@@ -21,6 +22,14 @@ class _SignupformState extends State<Signupform> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   final userRolecontroller = TextEditingController();
+
+  late FlutterSecureStorage secureStorage;
+
+  @override
+  void initState() {
+    super.initState();
+    secureStorage = FlutterSecureStorage();
+  }
 
   String selected_countrycode = '+977';
 
@@ -47,6 +56,9 @@ class _SignupformState extends State<Signupform> {
       print(jsonResponse['message']);
 
       if (jsonResponse['status']) {
+        String token = jsonResponse['token'];
+
+        await secureStorage.write(key: 'token', value: token);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => NavigationPage()),
@@ -73,11 +85,6 @@ class _SignupformState extends State<Signupform> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             // Create a linear gradient with purple and white colors
-            gradient: LinearGradient(
-              colors: [const Color.fromARGB(255, 205, 187, 236), Colors.white],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -93,13 +100,9 @@ class _SignupformState extends State<Signupform> {
                           controller: namecontroller,
                           decoration: InputDecoration(
                               labelText: 'Full Name',
-                              labelStyle: TextStyle(color: Colors.white),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 4.0,
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    style: BorderStyle.solid,
-                                  ),
+                              labelStyle: TextStyle(
+                                  color: const Color.fromARGB(255, 1, 1, 1)),
+                              border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20))),
                           keyboardType: TextInputType.name,
                           validator: (value) {

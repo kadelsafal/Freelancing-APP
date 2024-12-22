@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("FULL NAME : $fullName"),
+            Text("$fullName"),
             GestureDetector(
               onTap: () {
                 Navigator.pushAndRemoveUntil(
