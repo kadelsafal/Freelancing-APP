@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (token != null) {
       // Decode the token
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-
       // Extract user details from the token payload
       setState(() {
         fullName = decodedToken['Full_Name'];

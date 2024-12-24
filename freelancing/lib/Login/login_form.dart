@@ -34,8 +34,9 @@ class _LoginFormState extends State<LoginForm> {
       final password = passwordfield.text;
 
       var reqBody = {"Email": email, "Password": password};
+
       var response = await http.post(Uri.parse(login),
-          headers: {'Content-Type': 'application/json'},
+          headers: {"Content-Type": "application/json"},
           body: jsonEncode(reqBody));
 
       var jsonResponse = jsonDecode(response.body);
